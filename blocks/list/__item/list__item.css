@@ -1,0 +1,22 @@
+.list__item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 792px;
+    height: 60px;
+    border-radius: 15px;
+    background: #FFB400;
+    color: #474744;
+    font-family: Helvetica;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 30px;
+    justify-content: space-between
+}

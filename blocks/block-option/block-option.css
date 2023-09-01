@@ -1,0 +1,8 @@
+.block-option {
+    margin-bottom: 55px;
+    display: grid;
+    grid-template-columns: repeat(2, 350px);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 25px 112px;
+    justify-content: center;
+}

@@ -1,0 +1,11 @@
+.list__button-del {
+    background-image: url(../../../images/cross_white.svg);
+    background-repeat: no-repeat;
+    width: 64px;
+    height: 64px;
+    background-position: 50% 50%;
+}
+
+.list__button-del:hover {
+    background-image: url(../../../images/cross_black.svg);
+}

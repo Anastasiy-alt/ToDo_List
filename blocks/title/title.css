@@ -1,0 +1,13 @@
+.title {
+    color: #474744;
+    font-family: Montserrat;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}

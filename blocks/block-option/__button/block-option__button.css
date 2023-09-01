@@ -1,0 +1,17 @@
+.block-option__button {
+    width: 350px;
+    height: 50px;
+    border-radius: 15px;
+    background: #2994B2;
+    color: #FFFBE0;
+    font-family: Helvetica;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.block-option__button:hover {
+    background: rgba(41, 148, 178, 0.30);
+    color: #474744;
+}

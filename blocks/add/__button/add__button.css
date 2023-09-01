@@ -1,0 +1,14 @@
+.add__button {
+    width: 100px;
+    height: 65px;
+    border-radius: 0px 15px 15px 0px;
+    border: 3px solid #FFB400;
+    background-image: url(../../../images/plus_black.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.add__button:hover {
+    background-color: #FFB400;
+    background-image: url(../../../images/plus_white.svg);
+}
