@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./pages/index.css">
+    <title>ToDo List</title>
+</head>
+
+<body class="page">
+    <section class="title">ToDo List</section>
+    <section class="block-option">
+        <button class="block-option__button button" name="btn-even">Выделить чётные элементы</button>
+        <button class="block-option__button button" name="btn-del-first">Удалить первый элемент</button>
+        <button class="block-option__button button" name="btn-odd">Выделить нечётные элементы</button>
+        <button class="block-option__button button" name="btn-del-last">Удалить последний элемент</button>
+    </section>
+    <section class="add">
+        <input type="text" class="add__input" placeholder="Добавить задачу">
+        <button class="add__button button" name="btn-add"></button>
+    </section>
+    <section class="list">
+
+    </section>
+   
+    <template class="task">
+        <button class="task__button-comp button" name="btn-mark"></button>
+        <p class="task__text">Улыбнуться</p>
+        <button class="task__button-del button" name="btn-delete"></button>
+    </template>
+    <script src="./scripts/index.js"></script>
+</body>
+
+</html>

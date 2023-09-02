@@ -1,0 +1,17 @@
+@import url(../vendor/normalize.css);
+@import url(../blocks/title/title.css);
+@import url(../blocks/page/page.css);
+@import url(../blocks/add/add.css);
+@import url(../blocks/block-option/block-option.css);
+@import url(../blocks/button/button.css);
+@import url(../blocks/list/list.css);
+@import url(../blocks/add/__button/add__button.css);
+@import url(../blocks/add/__input/add__input.css);
+@import url(../blocks/block-option/__button/block-option__button.css);
+@import url(../blocks/task/task.css);
+@import url(../blocks/task/__button-comp/task__button-comp.css);
+@import url(../blocks/task/__button-comp/_click/task__button-comp_click.css);
+@import url(../blocks/task/__button-del/task__button-del.css);
+@import url(../blocks/task/__text/task__text.css);
+@import url(../blocks/task/_theme/task_theme_comp.css);
+@import url(../blocks/task/_theme/task_theme_mark.css);

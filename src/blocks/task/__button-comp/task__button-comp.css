@@ -1,4 +1,4 @@
-.list__button-comp {
+.task__button-comp {
     background-image: url(../../../images/checkmark_white.svg);
     background-repeat: no-repeat;
     width: 64px;
@@ -7,6 +7,6 @@
 
 }
 
-.list__button-comp:hover {
+.task__button-comp:hover {
     background-image: url(../../../images/checkmark_black.svg);
 }
