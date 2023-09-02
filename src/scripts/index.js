@@ -8,6 +8,20 @@ const tasksList = document.querySelector('.list');
 const taskTemplate = document.querySelector('.task-template');
 const taskTextInput = document.querySelector('.add__input');
 
+//вызов функции удаления первой задачи в списке
+btnDeleteFirst.addEventListener('click', function (evt) {
+        // Получить ссылки на все элементы списка
+        const items = document.querySelectorAll('.task');
+        items[0].remove();
+})
+
+//вызов функции удаления последней задачи в списке
+btnDeleteLast.addEventListener('click', function (evt) {
+    // Получить ссылки на все элементы списка
+    const items = document.querySelectorAll('.task');
+    items[items.length-1].remove();
+})
+
 //вызов функции выделения четных задач в списке
 btnSelectEven.addEventListener('click', function (evt) {
     btnSelectEven.classList.toggle('block-option__button_theme_active')
