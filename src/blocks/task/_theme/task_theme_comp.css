@@ -1,4 +1,5 @@
 .task_theme_comp {
-    background: rgba(255, 180, 0, 0.30);
+    opacity: 0.3;
+    /* background: rgba(255, 180, 0, 0.30); */
     text-decoration: line-through;
 }

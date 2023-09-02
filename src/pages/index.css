@@ -14,4 +14,6 @@
 @import url(../blocks/task/__button-del/task__button-del.css);
 @import url(../blocks/task/__text/task__text.css);
 @import url(../blocks/task/_theme/task_theme_comp.css);
-@import url(../blocks/task/_theme/task_theme_mark.css);
+@import url(../blocks/task/_theme/task_theme_mark-even.css);
+@import url(../blocks/task/_theme/task_theme_mark-odd.css);
+@import url(../blocks/block-option/__button/_theme/block-option__button_theme_active.css)

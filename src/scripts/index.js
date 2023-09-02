@@ -6,7 +6,43 @@ const btnAddTask = document.querySelector('[name=btn-add]');
 const btnDeleteTask = document.querySelector('[name=btn-delete]');
 const tasksList = document.querySelector('.list');
 const taskTemplate = document.querySelector('.task-template');
-const taskTextInput = document.querySelector('.add__input')
+const taskTextInput = document.querySelector('.add__input');
+
+//вызов функции выделения четных задач в списке
+btnSelectEven.addEventListener('click', function (evt) {
+    btnSelectEven.classList.toggle('block-option__button_theme_active')
+    // Получить ссылки на все элементы списка
+    const items = document.querySelectorAll('.task');
+
+    if (btnSelectEven.classList.contains('block-option__button_theme_active')) {
+        // Итерироваться по элементам и выбрать каждый второй элемент
+        for (let i = 1; i < items.length; i += 2) {
+            items[i].classList.add('task_theme_mark-even');
+        }
+    } else {
+        for (let i = 0; i < items.length; i += 1) {
+            items[i].classList.remove('task_theme_mark-even');
+        }
+    }
+})
+
+//вызов функции выделения нечетных задач в списке
+btnSelectOdd.addEventListener('click', function (evt) {
+    btnSelectOdd.classList.toggle('block-option__button_theme_active')
+    // Получить ссылки на все элементы списка
+    const items = document.querySelectorAll('.task');
+
+    if (btnSelectOdd.classList.contains('block-option__button_theme_active')) {
+        // Итерироваться по элементам и выбрать каждый второй элемент
+        for (let i = 0; i < items.length; i += 2) {
+            items[i].classList.add('task_theme_mark-odd');
+        }
+    } else {
+        for (let i = 0; i < items.length; i += 1) {
+            items[i].classList.remove('task_theme_mark-odd');
+        }
+    }
+})
 
 //функция привязки обработчика события клика по кнопке удаления 
 function bindDeleteButtonClickHandler(task) {
@@ -20,12 +56,13 @@ function bindMarkButtonClickHandler(task) {
     task.querySelector('.task__button-comp').addEventListener('click', function (evt) {
         evt.target.classList.toggle('task__button-comp_click');
         task.classList.toggle('task_theme_comp');
+        // task.classList.remove('task_theme_mark')
         if (task.classList.contains('task_theme_comp')) {
             tasksList.append(task);
         } else {
             tasksList.prepend(task);
         }
-        
+
     });
 };
 
@@ -53,5 +90,4 @@ btnAddTask.addEventListener('click', function (evt) {
     const task = createTask(taskTextInput.value);
     tasksList.prepend(task);
     taskTextInput.value = '';
-    // resetButtonSave(popupAddCard, popupValidation);
 });
