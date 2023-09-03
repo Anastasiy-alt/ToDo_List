@@ -10,17 +10,19 @@ const taskTextInput = document.querySelector('.add__input');
 
 //вызов функции удаления первой задачи в списке
 btnDeleteFirst.addEventListener('click', function (evt) {
-        // Получить ссылки на все элементы списка
-        const items = document.querySelectorAll('.task');
-        items[0].remove();
-})
+    // Получить ссылки на все элементы списка
+    const items = document.querySelectorAll('.task');
+    items[0].remove();
+    removeTask(items[0]);
+});
 
 //вызов функции удаления последней задачи в списке
 btnDeleteLast.addEventListener('click', function (evt) {
     // Получить ссылки на все элементы списка
     const items = document.querySelectorAll('.task');
-    items[items.length-1].remove();
-})
+    items[items.length - 1].remove();
+    removeTask(items[items.length - 1]);
+});
 
 //вызов функции выделения четных задач в списке
 btnSelectEven.addEventListener('click', function (evt) {
@@ -38,7 +40,7 @@ btnSelectEven.addEventListener('click', function (evt) {
             items[i].classList.remove('task_theme_mark-even');
         }
     }
-})
+});
 
 //вызов функции выделения нечетных задач в списке
 btnSelectOdd.addEventListener('click', function (evt) {
@@ -56,12 +58,13 @@ btnSelectOdd.addEventListener('click', function (evt) {
             items[i].classList.remove('task_theme_mark-odd');
         }
     }
-})
+});
 
 //функция привязки обработчика события клика по кнопке удаления 
 function bindDeleteButtonClickHandler(task) {
     task.querySelector('.task__button-del').addEventListener('click', function (evt) {
         task.remove();
+        removeTask(task);
     });
 };
 
@@ -80,14 +83,6 @@ function bindMarkButtonClickHandler(task) {
     });
 };
 
-//форма отправки задачи
-function handleEditFormSubmit(evt) {
-    evt.preventDefault();
-    profileName.textContent = nameInput.value;
-    profileInfo.textContent = infoInput.value;
-    closeModalWindow(popupEditProfile);
-};
-
 //функция добавления задачи
 function createTask(taskText) {
     const taskCopy = taskTemplate.content.cloneNode(true);
@@ -95,6 +90,7 @@ function createTask(taskText) {
     task.querySelector('.task__text').textContent = taskText;
     bindMarkButtonClickHandler(task);
     bindDeleteButtonClickHandler(task);
+    saveTask(taskText); // Сохраняем задачу
     return task;
 };
 
@@ -105,3 +101,66 @@ btnAddTask.addEventListener('click', function (evt) {
     tasksList.prepend(task);
     taskTextInput.value = '';
 });
+
+//добавление задачи через нажатие "Enter"
+taskTextInput.addEventListener("keyup", function (evt) {
+    if (evt.keyCode === 13) { // 13 соответствует клавише Enter
+        evt.preventDefault(); // предотвращаем обычное поведение формы
+        submitForm();
+    }
+});
+
+function submitForm() {
+    const task = createTask(taskTextInput.value);
+    tasksList.prepend(task);
+    taskTextInput.value = '';
+};
+
+// Функция сохранения задачи в LocalStorage
+function saveTask(taskText) {
+    let tasks = [];
+    if (localStorage.getItem('tasks')) {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.push(taskText);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+// Функция загрузки задач из LocalStorage
+function loadTasks() {
+    if (localStorage.getItem('tasks')) {
+        const tasks = JSON.parse(localStorage.getItem('tasks'));
+        tasks.forEach(function (taskText) {
+            const task = createTask(taskText);
+            tasksList.prepend(task);
+        });
+    }
+}
+
+// Вызов функции загрузки задач при загрузке страницы
+window.addEventListener('DOMContentLoaded', function () {
+    loadTasks();
+//localStorage.clear();
+});
+
+// Функция удаления задачи из LocalStorage
+function deleteTask(taskText) {
+    let tasks = [];
+    if (localStorage.getItem('tasks')) {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+        const taskIndex = tasks.indexOf(taskText);
+        if (taskIndex > -1) {
+            tasks.splice(taskIndex, 1);
+        }
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+};
+
+// Функция удаления задачи из списка задач
+function removeTask(task) {
+    const taskText = task.querySelector('.task__text').textContent;
+    task.remove();
+    deleteTask(taskText); // Удаляем задачу из LocalStorage
+    console.log(localStorage.tasks)
+  };
+  
