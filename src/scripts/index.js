@@ -1,4 +1,3 @@
-// Получаем необходимые элементы
 const addButton = document.querySelector('.add__button');
 const inputField = document.querySelector('.add__input');
 const listSection = document.querySelector('[name=list-all]');
@@ -7,6 +6,17 @@ const taskTemplate = document.querySelector('.task-template');
 
 // Проверяем, есть ли сохраненные задачи в LocalStorage, и загружаем их
 let tasks = [];
+let tasksCompleted = [];
+
+if (localStorage.getItem('tasksCompleted')) {
+    try {
+        tasksCompleted = JSON.parse(localStorage.getItem('tasksCompleted'));
+    } catch (error) {
+        console.error('Error parsing tasks completed from LocalStorage:', error);
+    }
+    renderTasksCompleted();
+}
+
 if (localStorage.getItem('tasks')) {
     try {
         tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -22,25 +32,12 @@ function addTask() {
     if (taskText !== '') {
         const task = {
             text: taskText,
-            completed: false
+            completed: false,
         };
         tasks.push(task);
-        // Создаем элемент задачи и добавляем его в список
-        if (task.completed) {
-            const taskElement = createTaskElement(task);
-            listSectionComplete.append(taskElement);
-        } else {
-            const taskElement = createTaskElement(task);
-            listSection.append(taskElement);
-        }
-
-        // const taskElement = createTaskElement(task);
-        // listSection.append(taskElement);
-
-        // Сохраняем задачи в LocalStorage
+        const taskElement = createTaskElement(task);
+        listSection.append(taskElement);
         saveTasksToLocalStorage();
-
-        // Очищаем поле ввода
         inputField.value = '';
     }
 }
@@ -54,56 +51,58 @@ function deleteTask(taskElement) {
         saveTasksToLocalStorage();
     }
 }
-
-// Функция для удаления выполненной задачи
-function deleteTaskComplete(taskElement) {
-    const taskIndexComplete = Array.from(listSectionComplete.children).indexOf(taskElement);
-    if (taskIndexComplete > -1) {
-        taskElement.remove();
-        tasks.splice(taskIndexComplete, 1);
+function deleteTaskCompleted(taskElementComp) {
+    const taskIndex = Array.from(listSectionComplete.children).indexOf(taskElementComp);
+    if (taskIndex > -1) {
+        taskElementComp.remove();
+        tasksCompleted.splice(taskIndex, 1);
         saveTasksToLocalStorage();
     }
 }
 
 // Функция для отметки задачи как выполненной или невыполненной
-function toggleCompleteTask(taskElement) {
+function completeTask(taskElement) {
     const taskIndex = Array.from(listSection.children).indexOf(taskElement);
     if (taskIndex > -1) {
-        tasks[taskIndex].completed = !tasks[taskIndex].completed;
-        taskElement.classList.toggle('task_theme_comp');
+        tasks[taskIndex].completed = true;
+        console.log(tasks[taskIndex])
+        taskElement.classList.add('task_theme_comp');
         let buttonComplete = taskElement.querySelector('.task__button-comp')
-        buttonComplete.classList.toggle('task__button-comp_click');
-
-        if (taskElement.classList.contains('task_theme_comp')) {
-            // Удаляем элемент задачи из списка
-            taskElement.remove();
-            // Добавляем элемент задачи в конец списка
-            listSectionComplete.append(taskElement);
-        } else {
-            // Удаляем элемент задачи из списка
-            taskElement.remove();
-            // Добавляем элемент задачи в конец списка
-            listSection.append(taskElement);
-        }
-
-        // if (taskElement.classList.contains('task_theme_comp')) {
-        //     // Удаляем элемент задачи из списка
-        //     taskElement.remove();
-        //     // Добавляем элемент задачи в конец списка
-        //     listSection.append(taskElement);
-
-        // } else {
-        //     // Удаляем элемент задачи из списка
-        //     taskElement.remove();
-        //     // Добавляем элемент задачи в начало списка
-        //     listSection.prepend(taskElement);
-        // }
-
-
+        buttonComplete.classList.add('task__button-comp_click');
+        const taskComp = {
+            text: taskElement.querySelector('.task__text').textContent,
+            completed: true,
+        };
+        console.log(taskComp)
+        tasksCompleted.push(taskComp)
+        const taskElementComp = createTaskElement(taskComp);
+        listSectionComplete.append(taskElementComp);
+        taskElement.remove();
+        tasks.splice(taskIndex, 1);
         saveTasksToLocalStorage();
     }
 }
 
+function removeCompleteTask(taskElement) {
+    const taskIndex = Array.from(listSectionComplete.children).indexOf(taskElement);
+    if (taskIndex > -1) {
+        tasksCompleted[taskIndex].completed = false;
+        console.log(tasksCompleted[taskIndex])
+        taskElement.classList.remove('task_theme_comp');
+        let buttonComplete = taskElement.querySelector('.task__button-comp')
+        buttonComplete.classList.remove('task__button-comp_click');
+        const taskNew = {
+            text: taskElement.querySelector('.task__text').textContent,
+            completed: false,
+        };
+        tasks.push(taskNew)
+        const taskElementNew = createTaskElement(taskNew);
+        listSection.append(taskElementNew);
+        taskElement.remove();
+        tasksCompleted.splice(taskIndex, 1);
+        saveTasksToLocalStorage();
+    }
+}
 
 // Функция для создания элемента задачи
 function createTaskElement(task) {
@@ -112,56 +111,39 @@ function createTaskElement(task) {
     const taskTextElement = taskElement.querySelector('.task__text');
     const taskButtonCompElement = taskElement.querySelector('.task__button-comp');
     taskTextElement.textContent = task.text;
-    // taskElement.querySelector('.task__button-del').addEventListener('click', () => deleteTask(taskElement));
-    taskButtonCompElement.addEventListener('click', () => toggleCompleteTask(taskElement));
-
     if (task.completed) {
-        taskElement.querySelector('.task__button-del').addEventListener('click', () => deleteTaskComplete(taskElement));
+        taskButtonCompElement.addEventListener('click', () => removeCompleteTask(taskElement));
+        taskElement.querySelector('.task__button-del').addEventListener('click', () => deleteTaskCompleted(taskElement));
         taskElement.classList.add('task_theme_comp');
-        let button = taskElement.querySelector('.task__button-comp')
-        button.classList.add('task__button-comp_click');
-        // listSection.append(task);
+        taskButtonCompElement.classList.add('task__button-comp_click');
     } else {
-        taskButtonCompElement.classList.remove('task__button-comp_click');
+        taskButtonCompElement.addEventListener('click', () => completeTask(taskElement));
         taskElement.querySelector('.task__button-del').addEventListener('click', () => deleteTask(taskElement));
-        // listSection.prepend(task);
+        taskButtonCompElement.classList.remove('task__button-comp_click');
+        taskElement.classList.remove('task_theme_comp');
     }
-
     return taskElement;
 }
 
 // Функция для рендеринга задач из массива
 function renderTasks() {
-    // Сортируем массив задач таким образом, чтобы выполненные задачи были в конце списка
-    // tasks.sort((a, b) => (a.completed === b.completed) ? 0 : a.completed ? 1 : -1);
-
     tasks.forEach(task => {
         const taskElement = createTaskElement(task);
-        if (taskElement.classList.contains('task_theme_comp')) {
-            listSectionComplete.append(taskElement);
-        } else {
-            listSection.append(taskElement);
-        }
+        listSection.append(taskElement);
+    });
+}
+function renderTasksCompleted() {
+    tasksCompleted.forEach(task => {
+        const taskElement = createTaskElement(task);
+        listSectionComplete.append(taskElement);
     });
 }
 
 // Функция для сохранения задач в LocalStorage
 function saveTasksToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem('tasksCompleted', JSON.stringify(tasksCompleted));
 }
 
-// Слушатель на кнопку добавления задачи
 addButton.addEventListener('click', addTask);
-
-// Слушатели на кнопки удаления и отметки задачи
-// listSection.addEventListener('click', function(event) {
-//     const target = event.target;
-//     const taskElement = target.closest('.task');
-  
-//     if (target.classList.contains('task__button-del')) {
-//       deleteTask(taskElement);
-//     } else if (target.classList.contains('task__button-comp')) {
-//         toggleCompleteTask(taskElement);
-//     }
-//   });
-  
+//localStorage.clear()

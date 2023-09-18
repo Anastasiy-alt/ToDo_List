@@ -39,68 +39,67 @@
         </article>
     </template>
     <script src="./scripts/index.js"></script>
-    <!-- <script>
-        // Получаем элементы страницы
-        const taskTextInput = document.querySelector('.add__input');
-        const btnAddTask = document.querySelector('.add__button');
-        const taskList = document.querySelector('.list');
-    
-        // Проверяем, есть ли сохраненные задачи в localStorage
-        const savedTasks = localStorage.getItem('tasks');
-        if (savedTasks) {
-            taskList.innerHTML = savedTasks; // Восстанавливаем задачи на странице
-        }
-    
-        // Обработчик клика по кнопке добавления задачи
-        btnAddTask.addEventListener('click', function () {
-            const taskText = taskTextInput.value.trim();
-            if (taskText !== '') {
-                addTask(taskText); // Добавляем новую задачу
-            }
-            taskTextInput.value = ''; // Очищаем поле ввода
-        });
-    
-        // Обработчик нажатия Enter при вводе задачи
-        taskTextInput.addEventListener('keypress', function (event) {
-            const taskText = taskTextInput.value.trim();
-            if (taskText !== '' && event.key === 'Enter') {
-                addTask(taskText); // Добавляем новую задачу
-                taskTextInput.value = ''; // Очищаем поле ввода
-            }
-        });
-    
-        // Функция добавления новой задачи
-        function addTask(taskText) {
-            const taskTemplate = document.querySelector('.task-template');
-            const task = taskTemplate.content.cloneNode(true);
-            task.querySelector('.task__text').textContent = taskText;
-            taskList.appendChild(task);
-            saveTasks(); // Сохраняем задачи в localStorage
-        }
-    
-        // Обработчик клика по кнопке выполнения задачи
-        taskList.addEventListener('click', function (event) {
-            const task = event.target.closest('.task');
-            if (task) {
-                task.classList.toggle('task_theme_comp'); // Добавляем/удаляем класс для выполненных задач
-                saveTasks(); // Сохраняем задачи в localStorage
-            }
-        });
-    
-        // Обработчик клика по кнопке удаления задачи
-        taskList.addEventListener('click', function (event) {
-            const deleteButton = event.target.closest('.task__button-del');
-            if (deleteButton) {
-                const task = deleteButton.closest('.task');
-                task.remove(); // Удаляем задачу со страницы
-                saveTasks(); // Сохраняем задачи в localStorage
-            }
-        });
-    
-        // Функция сохранения задач в localStorage
-        function saveTasks() {
-            localStorage.setItem('tasks', taskList.innerHTML);
-        }
+    // Получаем элементы страницы
+    const taskTextInput = document.querySelector('.add__input');
+    const btnAddTask = document.querySelector('.add__button');
+    const taskList = document.querySelector('.list');
+
+    // Проверяем, есть ли сохраненные задачи в localStorage
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+    taskList.innerHTML = savedTasks; // Восстанавливаем задачи на странице
+    }
+
+    // Обработчик клика по кнопке добавления задачи
+    btnAddTask.addEventListener('click', function () {
+    const taskText = taskTextInput.value.trim();
+    if (taskText !== '') {
+    addTask(taskText); // Добавляем новую задачу
+    }
+    taskTextInput.value = ''; // Очищаем поле ввода
+    });
+
+    // Обработчик нажатия Enter при вводе задачи
+    taskTextInput.addEventListener('keypress', function (event) {
+    const taskText = taskTextInput.value.trim();
+    if (taskText !== '' && event.key === 'Enter') {
+    addTask(taskText); // Добавляем новую задачу
+    taskTextInput.value = ''; // Очищаем поле ввода
+    }
+    });
+
+    // Функция добавления новой задачи
+    function addTask(taskText) {
+    const taskTemplate = document.querySelector('.task-template');
+    const task = taskTemplate.content.cloneNode(true);
+    task.querySelector('.task__text').textContent = taskText;
+    taskList.appendChild(task);
+    saveTasks(); // Сохраняем задачи в localStorage
+    }
+
+    // Обработчик клика по кнопке выполнения задачи
+    taskList.addEventListener('click', function (event) {
+    const task = event.target.closest('.task');
+    if (task) {
+    task.classList.toggle('task_theme_comp'); // Добавляем/удаляем класс для выполненных задач
+    saveTasks(); // Сохраняем задачи в localStorage
+    }
+    });
+
+    // Обработчик клика по кнопке удаления задачи
+    taskList.addEventListener('click', function (event) {
+    const deleteButton = event.target.closest('.task__button-del');
+    if (deleteButton) {
+    const task = deleteButton.closest('.task');
+    task.remove(); // Удаляем задачу со страницы
+    saveTasks(); // Сохраняем задачи в localStorage
+    }
+    });
+
+    // Функция сохранения задач в localStorage
+    function saveTasks() {
+    localStorage.setItem('tasks', taskList.innerHTML);
+    }
     </script> -->
 </body>
 
