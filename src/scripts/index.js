@@ -3,11 +3,61 @@ const inputField = document.querySelector('.add__input');
 const listSection = document.querySelector('[name=list-all]');
 const listSectionComplete = document.querySelector('[name=list-complete]');
 const taskTemplate = document.querySelector('.task-template');
-
-// Проверяем, есть ли сохраненные задачи в LocalStorage, и загружаем их
+const btnSelectEven = document.querySelector('[name=btn-even]');
+const btnSelectOdd = document.querySelector('[name=btn-odd]');
+const btnDeleteFirst = document.querySelector('[name=btn-del-first]');
+const btnDeleteLast = document.querySelector('[name=btn-del-last]');
 let tasks = [];
 let tasksCompleted = [];
 
+
+//Вызов функции удаления первой задачи в списке
+btnDeleteFirst.addEventListener('click', function (evt) {
+    const items = listSection.querySelectorAll('.task');
+    items[0].remove();
+    tasks.splice(0, 1);
+    saveTasksToLocalStorage();
+});
+
+//Вызов функции удаления последней задачи в списке
+btnDeleteLast.addEventListener('click', function (evt) {
+    const items = listSection.querySelectorAll('.task');
+    items[items.length - 1].remove();
+    tasks.splice(items.length - 1, 1);
+    saveTasksToLocalStorage();
+});
+
+//Вызов функции выделения четных задач в списке
+btnSelectEven.addEventListener('click', function (evt) {
+    btnSelectEven.classList.toggle('block-option__button_theme_active')
+    const items = document.querySelectorAll('.task');
+    if (btnSelectEven.classList.contains('block-option__button_theme_active')) {
+        for (let i = 1; i < items.length; i += 2) {
+            items[i].classList.add('task_theme_mark-even');
+        }
+    } else {
+        for (let i = 0; i < items.length; i += 1) {
+            items[i].classList.remove('task_theme_mark-even');
+        }
+    }
+});
+
+//Вызов функции выделения нечетных задач в списке
+btnSelectOdd.addEventListener('click', function (evt) {
+    btnSelectOdd.classList.toggle('block-option__button_theme_active')
+    const items = document.querySelectorAll('.task');
+    if (btnSelectOdd.classList.contains('block-option__button_theme_active')) {
+        for (let i = 0; i < items.length; i += 2) {
+            items[i].classList.add('task_theme_mark-odd');
+        }
+    } else {
+        for (let i = 0; i < items.length; i += 1) {
+            items[i].classList.remove('task_theme_mark-odd');
+        }
+    }
+});
+
+// Проверяем, есть ли сохраненные задачи в LocalStorage, и загружаем их
 if (localStorage.getItem('tasksCompleted')) {
     try {
         tasksCompleted = JSON.parse(localStorage.getItem('tasksCompleted'));
@@ -146,4 +196,3 @@ function saveTasksToLocalStorage() {
 }
 
 addButton.addEventListener('click', addTask);
-//localStorage.clear()
